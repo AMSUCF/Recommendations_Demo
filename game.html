@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple P5.js Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let scarecrow;
+
+        function preload() {
+            // Load the scarecrow image
+            scarecrow = loadImage('scarecrow.png');
+        }
+
+        function setup() {
+            // Create a 1000x1000 canvas and center it
+            let cnv = createCanvas(1000, 1000);
+            cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
+        }
+
+        function draw() {
+            // Draw the scarecrow image as the background
+            background(scarecrow);
+            
+            // Draw a simple circle that follows the mouse
+            fill(100, 200, 250);
+            ellipse(mouseX, mouseY, 50, 50);
+        }
+
+        // Make sure the canvas re-centers if the window is resized
+        function windowResized() {
+            resizeCanvas(1000, 1000);
+            let cnv = createCanvas(1000, 1000);
+            cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
+        }
+    </script>
+</body>
+</html>
