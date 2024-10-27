@@ -49,10 +49,15 @@
                 if (mouseX > zone.x && mouseX < zone.x + zone.w && mouseY > zone.y && mouseY < zone.y + zone.h) {
                     fill(255, 0, 0, 100);
                     rect(zone.x, zone.y, zone.w, zone.h);
+                    // Display the name of the zone in the center of the screen
+                    fill(0);
+                    textSize(48);
+                    textAlign(CENTER, CENTER);
+                    text(zone.name, width / 2, height / 2);
                 }
             }
 
-            // Display the current mouse coordinates
+            // Display the current mouse coordinates at the mouse position
             displayCoordinates();
         }
 
@@ -66,10 +71,11 @@
         }
 
         function displayCoordinates() {
-            // Display the current mouse coordinates in the bottom-left corner of the canvas
-            fill(0);
-            textSize(16);
-            text(`X: ${mouseX}, Y: ${mouseY}`, 10, height - 10);
+            // Display the current mouse coordinates at the mouse position
+            fill(255);
+            textSize(32);
+            textAlign(LEFT, TOP);
+            text(`X: ${mouseX}, Y: ${mouseY}`, mouseX, mouseY);
         }
 
         // Make sure the canvas re-centers if the window is resized
