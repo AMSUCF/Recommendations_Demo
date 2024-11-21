@@ -1,0 +1,14 @@
+[
+    { "title": "Inception", "genre": "Sci-Fi" },
+    { "title": "The Godfather", "genre": "Crime" },
+    { "title": "Pulp Fiction", "genre": "Crime" },
+    { "title": "Interstellar", "genre": "Sci-Fi" },
+    { "title": "The Dark Knight", "genre": "Action" },
+    { "title": "Fight Club", "genre": "Drama" },
+    { "title": "Forrest Gump", "genre": "Drama" },
+    { "title": "Gladiator", "genre": "Action" },
+    { "title": "The Matrix", "genre": "Sci-Fi" },
+    { "title": "Se7en", "genre": "Thriller" },
+    { "title": "The Silence of the Lambs", "genre": "Thriller" }
+  ]
+  

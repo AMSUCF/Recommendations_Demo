@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Recommendation System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .movie-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .movie-item {
+      flex: 1 1 calc(30% - 20px);
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .recommendation {
+      margin-top: 20px;
+      font-size: 1.2em;
+      text-align: center;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Movie Recommendation System</h1>
+  <div class="movie-list" id="movieList">
+    <!-- Movies will be dynamically populated here -->
+  </div>
+  <button id="getSuggestion">Get Recommendation</button>
+  <div class="recommendation" id="recommendation"></div>
+
+  <script>
+    // Fetch movie data from a JSON file (movies.json)
+    async function loadMovies() {
+      const response = await fetch('movies.json');
+      const movies = await response.json();
+      const movieList = document.getElementById('movieList');
+      movieList.innerHTML = '';
+
+      // Display 10 movies with ranking inputs
+      movies.slice(0, 10).forEach((movie, index) => {
+        const movieItem = document.createElement('div');
+        movieItem.classList.add('movie-item');
+        movieItem.innerHTML = `
+          <h3>${movie.title}</h3>
+          <p>${movie.genre}</p>
+          <label>
+            Your Ranking: 
+            <input type="number" min="1" max="10" data-id="${index}" />
+          </label>
+        `;
+        movieList.appendChild(movieItem);
+      });
+    }
+
+    // Get a recommendation based on user rankings
+    async function getRecommendation() {
+      const inputs = document.querySelectorAll('.movie-item input');
+      const rankings = [];
+      inputs.forEach(input => {
+        const value = parseInt(input.value, 10);
+        if (!isNaN(value)) {
+          rankings.push({ id: input.dataset.id, rank: value });
+        }
+      });
+
+      // Sort movies by rank and select the top-ranked genre for recommendation
+      rankings.sort((a, b) => a.rank - b.rank);
+      const response = await fetch('movies.json');
+      const movies = await response.json();
+      const topGenre = movies[rankings[0]?.id]?.genre;
+
+      // Recommend a random movie from the same genre
+      const recommendations = movies.filter(movie => movie.genre === topGenre);
+      const recommendation =
+        recommendations[Math.floor(Math.random() * recommendations.length)];
+      document.getElementById('recommendation').innerText =
+        recommendation ? `We recommend: ${recommendation.title}` : 'No recommendations found!';
+    }
+
+    // Event listeners
+    document.getElementById('getSuggestion').addEventListener('click', getRecommendation);
+
+    // Initialize the app
+    loadMovies();
+  </script>
+</body>
+</html>
